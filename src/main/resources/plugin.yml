@@ -1,5 +1,5 @@
 name: CreeperDropAll
 version: 1.0.0
 api-version: 1.16
-main: net.kjnine.CreeperDropAll
+main: net.kjnine.creeperdropall.CreeperDropAll
 author: KJNine
