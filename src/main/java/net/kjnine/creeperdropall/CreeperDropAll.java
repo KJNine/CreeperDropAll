@@ -45,7 +45,7 @@ public class CreeperDropAll extends JavaPlugin implements Listener {
 			getLogger().severe("CoreProtect outdated version (API v6 or higher required), Functionality will be limited.");
 			return null;
 		}
-
+		getLogger().info("CoreProtect hooked properly. Creeper Explosions will be logged.");
 		return CoreProtect;
 	}
 
@@ -60,13 +60,16 @@ public class CreeperDropAll extends JavaPlugin implements Listener {
 			
 			Creeper c = (Creeper) e.getEntity();
 			LivingEntity suspect = c.getTarget();
-			if(suspect != null) {
-				for (Block b : e.blockList()) {
-					coApi.logRemoval("(Creeper)" + suspect.getName(), b.getLocation(), b.getType(), b.getBlockData());
+			if(coApi != null) {
+
+				if(suspect != null) {
+					for (Block b : e.blockList()) {
+						coApi.logRemoval("(Creeper)" + suspect.getName(), b.getLocation(), b.getType(), b.getBlockData());
+					}
+				} else {
+					e.blockList().clear();
+					e.setCancelled(true);
 				}
-			} else {
-				e.blockList().clear();
-				e.setCancelled(true);
 			}
 			
 			e.setYield(1.0f);
