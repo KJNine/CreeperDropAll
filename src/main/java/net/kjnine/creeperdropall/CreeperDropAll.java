@@ -1,11 +1,13 @@
 package net.kjnine.creeperdropall;
 
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Creeper;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -60,11 +62,14 @@ public class CreeperDropAll extends JavaPlugin implements Listener {
 			
 			Creeper c = (Creeper) e.getEntity();
 			LivingEntity suspect = c.getTarget();
+			
+			e.blockList().removeIf(b -> b.getType() == Material.CHEST || b.getType() == Material.TRAPPED_CHEST);
+			
 			if(coApi != null) {
 
 				if(suspect != null) {
 					for (Block b : e.blockList()) {
-						coApi.logRemoval("(Creeper)" + suspect.getName(), b.getLocation(), b.getType(), b.getBlockData());
+						coApi.logRemoval("#creeper[" + suspect.getName() + "]", b.getLocation(), b.getType(), b.getBlockData());
 					}
 				} else {
 					e.blockList().clear();
